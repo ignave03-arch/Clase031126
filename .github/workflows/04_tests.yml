@@ -1,18 +1,22 @@
-name: Jobs Secuenciales
+name: Pruebas Python
 on:
   push:
     branches:
       - main
-jobs:
-  build:
-    runs-on: ubuntu-26.04
-    steps:
-      - name: Construir proyecto
-        run: echo "Construyendo proyecto..."
 
+jobs:
   test:
-    needs: build
     runs-on: ubuntu-26.04
     steps:
+      - uses: actions/checkout@v7
+
+      - name: Configurar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+
+      - name: Instalar dependencias
+        run: pip install -r proyecto/requirements.txt
+
       - name: Ejecutar tests
-        run: echo "Ejecutando tests..."
+        run: pytest proyecto/test_demo.py
